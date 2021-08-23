@@ -25,6 +25,8 @@ def plot_rankings(dataset, coaster):
   plt.ylabel('Points')
   plt.show()
 
+plot_rankings(wood_rankings, 'El Toro')
+
 plt.clf()
 
 # write function to plot rankings over time for 2 roller coasters here:
@@ -58,14 +60,33 @@ def plot_two_rankings(dataset1, coaster1, dataset2, coaster2):
 
   plt.show()
 
+plot_two_rankings(wood_rankings, "El Toro", wood_rankings, "Boulder Dash")
+
 plt.clf()
 
 # write function to plot top n rankings over time here:
 def plot_top_n(dataset, n):
+    # get points from the dataset
+    points = dataset[dataset.Rank <= n]
+    # get the names of the coasters from the new df
+    names = points.Name[0:5]
+    # get unique year values for x ticks
+    year_range = points['Year of Rank'].unique()
+    colors = ['blue', 'orange', 'green', 'red', 'purple']
+    # loop the length of names and plot each coaster one by one
+    for x in range(n):
+      name = names[x]
+      value = points.Points[points.Name == name]
+      plt.plot(range(len(value)), value, color=colors[x], label=name)
+    ax = plt.subplot()
+    ax.set_xticks(range(len(year_range)))
+    ax.set_xticklabels(year_range)
+    plt.legend(names)
+    plt.title('Top 5 Coasters')
+    plt.show()
 
 
-
-
+plot_top_n(wood_rankings, 5)
 
 
 
